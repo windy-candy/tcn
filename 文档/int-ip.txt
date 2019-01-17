@@ -1,0 +1,4 @@
+addr.s_addr = ntohl(ptCCDataProc->uiRtMediaAddr);
+char *IP = inet_ntoa(addr);
+
+debuginfo-install dbus-libs-1.2.24-7.el6_3.i686 glibc-2.12-1.132.el6.i686 libpcap-1.4.0-1.20130826git2dbcaa1.el6.i686 zlib-1.2.3-29.el6.i686

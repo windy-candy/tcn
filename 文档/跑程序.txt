@@ -1,0 +1,83 @@
+[ 媒体插件 ]
+编译媒体插件：
+/home/huangyz/share/founder2016-1/founder/app
+sudo bash run_make.sh media               ; centos-x86
+sudo bash run_make.sh mediainstall
+
+跑媒体插件：
+/home/huangyz/share/founder2016-1/founder/app/target/media/centos-x86
+sudo bash ./runtest.sh media
+
+[ 媒体服务 ]
+编译StreamServer：
+/home/huangyz/share/founder2016-1/record/code
+
+sudo make
+sudo make install
+
+跑StreamServer：
+/home/huangyz/share/founder2016-1/record/target/bin
+sudo ./StreamServer 
+
+
+[ 主服务 ]
+编译主服务：
+/home/huangyz/share/founder2016-1/founder/app
+make                                ; x86
+make install
+
+./run_make.sh server        ; centos-x86
+
+跑主服务：
+虚拟机：
+/home/huangyz/share/founder2016-1/founder/app/target/server/x86
+sudo bash ./runtest.sh server
+
+[ my ]
+A-->
+cd /home/tanyp/working/Founder/Software/Branch/develop2016-1/founder/app
+sudo bash run_make.sh media
+sudo bash run_make.sh mediainstall
+
+cd /home/tanyp/founder2016-1/founder/app
+
+B-->
+cd /home/tanyp/working/Founder/Software/Branch/develop2016-1/founder/app/target/media
+cd /home/tanyp/working/Founder/Software/Branch/develop2016-1/founder/app/target/media/centos-x86
+sudo bash ./runtest.sh media
+
+cd /home/tanyp/founder2016-1/founder/app/target/media/centos-x86
+
+A-->
+cd /home/tanyp/working/Founder/Software/Branch/develop2016-1/founder/app
+make                                                  ; x86
+sudo make install
+sudo bash ./run_make.sh server        ; centos-x86
+
+cd /home/tanyp/founder2016-1/founder/app
+
+B-->
+cd /home/tanyp/working/Founder/Software/Branch/develop2016-1/founder/app/target/server
+cd /home/tanyp/working/Founder/Software/Branch/develop2016-1/founder/app/target/server/x86
+sudo bash ./runtest.sh server
+
+cd /home/tanyp/founder2016-1/founder/app/target/server/x86
+
+A-->
+cd /home/tanyp/working/Founder/Software/Branch/develop2016-1/record/code
+sudo make
+sudo make install
+
+cd /home/tanyp/founder2016-1/record/code
+
+B-->
+cd /home/tanyp/working/Founder/Software/Branch/develop2016-1/record/target/bin
+sudo ./StreamServer 
+
+cd /home/tanyp/founder2016-1/record/target/bin
+
+[ 编译问题 ]
+1.可能提示....../.svn/bin找不到，则将整个.svn目录删除。
+rm -rf /home/tanyp/FounderTrunk/founder/app/external/centos-x86/.svn
+
+

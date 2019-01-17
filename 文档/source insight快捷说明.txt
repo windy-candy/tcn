@@ -1,0 +1,35 @@
+[说明]
+本文档阐述了ADI100项目组使用Source Insight的注释生成的快捷键.
+
+[快捷键列表]
+1 扩展命令 ctrl + enter
+2 添加函数头 ctrl + shift + u
+3 添加文件头 ctrl + shift + i
+4 添加头文件 ctrl + shift + h
+5 删除       ctrl + shift + d
+6 修改       ctrl + shift + m
+7 添加       ctrl + shift + a
+
+Ctrl + Alt + H : 生成文件头的说明
+Ctrl + Shift + I : 生成.c头文件
+
+Ctrl + Shift + U : 生成函数声明
+
+Ctrl + Alt + I : 生成if语句
+Ctrl + Alt + E : 生成else语句
+Ctrl + Alt + W : 生成while语句
+Ctrl + Alt + F : 生成for语句
+
+"if" -> Ctrl + Enter : 生成if语句
+"wh" / "while" -> Ctrl + Enter : 生成while语句
+"//" -> Ctrl + Enter : 生成标准注释
+"st" / "struct" -> Ctrl + Enter : 生成struct注释
+"union" -> Ctrl + Enter : 生成union注释
+"enum" -> Ctrl + Enter : 生成enum注释
+
+"mod" -> Ctrl + Enter : 生成模块注释(一个文件可以认为一个模块)
+"gp" -> Ctrl + Enter : 生成组注释 (相关定义可以认为一组,模块内可能有多组)
+
+[快捷键修改]
+Options -> Key Assignments -> 在Command下输入M
+->选择要修改的快捷键内容 -> Assign New Key -> 敲入组合键即可.
