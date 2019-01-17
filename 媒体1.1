@@ -1,0 +1,424 @@
+帧率：5、10、15、20、25、30、50、60
+码率：128kb、256kb、384kb、512kb、768kb、1mb、1.5mb、2mb、3mb、4mb、6mb、8mb
+
+1. 音频输入
+
+功能 设置音频输入配置
+URL path /dev/audioin/cfg
+Method GET/PUT/REPORT
+Body 见“附1”
+备注  
+分别为设置输入音量、是否静音、是否幻象供电
+音量的值为整数0~100
+7路音频输入，实际根据数组大小判断
+GET section:""
+PUT/REPORT :红色字体
+附1
+{  
+"audInCfg":{
+"1":{				//根据实际个数，数组大小决定个数,可选				
+"type":"Hisilicon"	 //输入类型,"Hisilicon"海思板（主板）,"AudioDeal"音频板,
+//"H2A"海思板到音频板,"A2H"音频板到海思板 （不可更改）
+"name":"HDMI音频1"	//名字				
+"volume":50,			//音量范围为0~100		
+"AEC":1,				//是否打开回声消除  保留		
+"AGC":1,				//是否打开自动增益  保留	
+"ANC":1,				//是否打开噪声抑制  保留
+"mute":0,				//是否静音			
+"supportEPCtrl":0,		//是否支持幻象供电	
+"eidolonPower":0		//是否使用幻象供电
+},
+"2":{......},
+"3":{......}
+}
+}
+2. 音频输出
+功能 设置音频输出配置
+URL path /dev/audioout/cfg
+Method GET/PUT/REPORT
+Body 见“附2”
+备注  
+分别设置输出音量、是否闭音
+6路音频输出，实际根据数组大小判断
+GET section:""
+PUT/REPORT :红色字体
+附2
+{  	
+"audOutCfg":{
+"1":{
+"type":"Hisilicon"		   //输出类型,"Hisilicon"海思板（主板）,"AudioDeal"音频板,
+//"H2A"海思板到音频板,"A2H"音频板到海思板 （不可更改）
+//AudioDeal时，AudioDeal和H2A的可混
+//Hisilicon时，Hisilicon和A2H的可混
+//H2A时，Hisilicon的可混
+//A2H时，AudioDeal的可混
+"name":"吊麦1"		//名字			
+"volume":50,			//音量		
+"shield:0				//是否闭音	
+"supportAmpCtrl":0,	//是否支持功放			//不可改
+"ampCtrl":0   			//是否启用功放(废弃)
+},
+"2":{},
+"3":{}
+},
+"audOutMixCfg":{
+"1":{					//音频输出id
+"mix":[0,1,0,1,1,0,1]	//混音:数组下标即音频输入id
+},
+"2":{},
+"3":{}
+}
+}
+3. 视频输入
+功能 视频输入配置
+URL path /dev/videoin/cfg
+Method GET/PUT/REPORT
+Body 见“附3”
+备注  
+4路视频输入，实际根据数组大小判断
+GET section:""
+PUT/REPORT :红色字体
+附3
+{  	
+"vidInCfg":{
+"0"：{					//可选
+"name":"DVI2/HDMI"，	//名字								
+"bright":50,		 	 //亮度		
+"contrast":60,		 	//对比度		
+"tone":70,			//色调		
+"saturation":80			//饱和度		
+"portType":"VGA",			//端口类型		
+ //VGA、YPbPr、DVI、HDMI、HDMI1、AUTO
+
+//0   VGA、YPbPr、DVI、HDMI、AUTO
+//1   VGA、YPbPr、DVI、HDMI、HDMI1、AUTO
+//2   SDI
+//3   SDI
+},
+"1":{},
+"2":{}
+}
+}
+功能 视频输入状态
+URL path /dev/videoin/state
+Method GET/REPORT
+Body 见“附4”
+备注  
+4路视频输入，实际根据数组大小判断
+GET section:""
+REPORT :红色字体
+附4
+{  	
+"info":{
+"0":{
+"width":1920,				//宽
+"height":1080,				//高
+"frameRate":30			//帧率
+"portType":"VGA",	      //端口类型
+    //VGA、YPbPr、DVI、HDMI、HDMI1、SDI
+},
+"1":{},
+"2":{}
+}
+}
+4. 视频输出
+
+功能 视频输出配置
+URL path /dev/videoout/cfg
+Method GET/PUT/REPORT
+Body 见“附5”
+备注  
+3个视频输出，实际根据数组大小判断
+GET section:""
+PUT/REPORT :红色字体
+附5
+{  	
+"vidOutCfg":{
+"0":{				//可选
+"name":"HDMI"，		//名字	
+"use":1,			  	//是否启用  保留
+"bright":50,		 	 //亮度
+"contrast":60,		 	//对比度
+"tone":70,			//色调
+"saturation":80,			//饱和度
+"audioType":"HDMI",	    	//是否输出音频，有DVI(不带声音),HDMI(带声音),AUTO(自动检测)																
+},
+"1":{},
+"2":{}
+}
+}
+5. 视频画面
+功能 配置视频画面
+URL path /dev/dispcontent/cfg
+Method GET/PUT/REPORT
+Body 见“附6”
+备注  
+GET section:""
+PUT/REPORT :红色字体
+
+2个视频画面
+多画面类型：
+"Single"单画面
+"Dual"双画面,1左1右，"PIP1F1UL"画中画,1全1左上，"PIP1F1LL"画中画,1全1左下，"PIP1F1UR"画中画,1全1右上，"PIP1F1LR"画中画,1全1右下
+"Three2U1D"3分屏,2上1下，"Three1U2D"3分屏,1上2下，"Three1F2L"3分屏,1全2左，"Three1F2R"3分屏,1全2右
+"Four4Side"4分屏,4方向各1个，"Four1F3D"4分屏,1全3下，"Four1F3L"4分屏,1全3左，"Four1F3R"4分屏,1全3右
+"Nine9Side"9分屏,9宫格，"Nine1T5S"9分屏,1拖5
+"Sixteen16Side"16分屏，"Sixteen1T7"16分屏,1拖7，"Sixteen2U8D"16分屏,2上8下，"Sixteen1C12S"16分屏,1中12旁边，"Sixteen2C8S"16分屏,2中8旁边
+"TwentyFive25Side"25分屏，"TwentyFive1T9"25分屏,1拖9，"TwentyFive1C16S"25分屏,1中16边，"TwentyFive4T9"25分屏,4拖9
+"ThirtySix36Side"36分屏，"ThirtySix1T11"36分屏,1拖11
+"SixtyFour64Side"64分屏，"SixtyFour1T15"64分屏,1拖15
+附6  	(黑为必发，红可单独)
+{  	
+"dispContentCfg":{
+"0"{
+"name":"画面1"，				//名字	
+"vidOutId":[0,1]	     			//同源输出,视频输出索引	
+"defaultPic":""     			     	//背景图	
+"outputParam":{							
+"fmtType":"720p",          	//分辨率，有XGA,WXGA,720P,1080P,SXGA
+"frameRate":60,	  	//帧率
+}，	
+"scanningType":"Line"		//"Line"逐行显示，"Interlaced"隔行显示									
+"expandMode":"ScaleUp"		//图像放大模式，有ScaleUp(比例放大),FillTo(填充)	
+"combParam":{
+"autoMP":1,			//自动多画面，选完底层自己选择,下面的参数无效
+"mpType":"Single",		//多画面类型，即几画面，详见备注
+"displayChnls":[
+{
+"devType":"Chan",	  //"Invalid"无效类型,即空白
+"_id":0
+},
+{
+"devType":"Chan",	
+"_id":0
+},
+{
+"devType":"Chan",	
+"_id":0
+}]
+}
+},		
+"1":{
+"name":"画面2"，				//名字	
+"vidOutId":[2]		     			//同源输出,视频输出id	
+"defaultPic":""     			     	//背景图
+"outputParam":{							
+"fmtType":"720p",          	//分辨率，有XGA,WXGA,720P,1080P,SVGA
+"frameRate":60,	  	//帧率（只要50,60）
+}，
+"scanningType":"Line"		//"Line"逐行显示，"Interlaced"隔行显示												
+"expandMode":"ScaleUp"		//图像放大模式，有ScaleUp(比例放大),FillTo(填充)	
+"combParam":{
+"autoMP":1,			//自动多画面，选完底层自己选择,下面的参数无效
+"mpType":"Single",		//多画面类型，即几画面，详见备注
+"displayChnls":[{
+"devType":"Chan",	
+"_id":0
+}]
+}
+}]
+}
+
+功能 获取视频画面分辨率列表(废弃)
+URL path /dev/dispcontent/cmd
+Method POST
+Body 见“附7”
+附7
+send 
+{
+"action":"getDispFmtList"		//"getDispFmtList"获取视频画面分辨率列表
+"paramlist":{
+"dispId":0				
+}	
+}
+recv
+{
+"dispId":0,									//视频画面id
+"num":5,									//数量
+"fmtType":["720P","1080P","WXGA","XGA","SVGA"]		//格式列表
+}
+功能 视频画面来源列表
+URL path /dev/dispcontent/items?listName=dispcontentSource
+Method GET/REPORT
+Body 见“附8”
+
+附8
+{  	
+"dispcontentSource":[{
+"devType":"RtspC",		//来源类型		
+//"RtspC","AudIn","AudOut","VidIn"	
+"_id":2			//通道id	
+"name":"名字"								
+},
+{}]
+}
+6. 编码
+
+功能 编码配置
+URL path /dev/encode/cfg
+Method GET/PUT/REPORT
+Body 见“附9”
+备注  
+GET section:""
+PUT/REPORT :红色字体
+附9
+{  	
+"vidEncCfg":{
+"0":{		
+"channelType":"main",			//通道类型，有main,pub,preview
+"devChn":{
+"devType":"Chan",		//固定
+_id:0
+},
+"vidEncParam":{
+"width":1920,				 	 //编码宽
+"height":1080,				  	//编码高
+"frameRate":60,			  	//帧率   0-60
+"bitRate":8388608,			 	 //码率  128kb-8mb
+"IFrameInterval":30,		  	  	//I帧间隔   30-300
+"QPParam":{				  	//量化参数
+"maxIQP":50,	  			//I帧最大量化系数，范围10~50
+"minIQP":50,	  			//I帧最小量化系数，范围10~50
+"maxPQP":50,	  			//P帧最大量化系数，范围10~50
+"minPQP":50,	  			//P帧最小量化系数，范围10~50
+}
+}
+},
+"1":{},
+"2":{},
+"3":{}
+}
+}
+7. 接入RTSP接口
+
+功能 RTSP
+URL path /dev/rtspc/cfg
+Method GET/PUT/REPORT
+Body 见“附10”
+备注  
+GET section:"rtspC"
+PUT/REPORT :红色字体
+附10
+{  	
+"rtspC":{
+"0":{
+"valid":1,								//是否启用
+"playAudio":1,							//是否播放音频（界面默认下发为播放）
+"name":"教室1"，						//名称
+"mainUrl": "rtsp://use:passwd@ip:port/path"	//rtsp路径
+"previewUrl": "rtsp://use:passwd@ip:port/path"	//rtsp路径
+},
+"1":{}
+}
+}
+
+RTSP接口
+
+功能 RTSP
+URL path /dev/rtsps/cfg
+Method GET/PUT/REPORT
+Body 见“附11”
+备注
+GET section:""
+PUT/REPORT :红色字体
+附11
+{ 
+"rtspS":{
+"0":{
+"name":"教室2"，								//名称
+"valid":1,										//是否启用
+"openMain":1,									//是否启用主流
+"openSub":0,									//是否启用子流
+"openPreview":1,								//是否启用预览流
+"username":"admin",							//用户名
+"password":"admin",								//密码
+"suffix":"path",									//路径后缀
+"ipaddr":"0.0.0.0",		//固定0.0.0.0
+"port":554,		 	//固定554
+"transmit":1,					//是否为转发能力（转发能力来源仅能为IPC）不能设置
+"sourceChn":{				//rtsp客户端源的来源		
+"devType":"RtspC",		//来源类型		
+//"RtspC","AudIn","AudOut","VidIn","VidContent"		
+"_id":2			//通道id
+},	
+
+"audOutId":0,						//绑定音频输出id （仅能绑定 0，1，2路）
+"delayTime":10						//延时ms    0- 2000								
+},
+"1":{}
+}
+}
+
+功能 RTSP服务来源列表
+URL path /dev/rtsps/items?listName=rtspsSource
+Method GET
+Body 见“附12”
+附12
+{  	
+"rtspsSource":[{
+"devType":"IPC",		//来源类型		
+//"IPC","AudIn","AudOut","VidIn","VidContent"			
+"_id":2			//通道id									
+},
+{}]
+}
+8. 媒体
+
+功能 媒体配置
+URL path /dev/media/cfg
+Method GET/PUT/REPORT
+Body 见“附13”
+备注  
+GET section:""
+PUT/REPORT :红色字体
+附13
+{  	
+"avRelation":{
+"0"{			//相当于视频id
+"audOutId":0,						//音频输出id
+"delayTime":10						//延时ms    0- 2000
+},
+"1":{}
+}
+}
+功能 媒体命令
+URL path /dev/media/cmd
+Method POST
+Body 见“附14”
+备注  action：
+音频测试：环回、默认-"startAudLoop","stopAud","startAudPlayTest"
+视频测试：环回、默认、编解码环回-"startVidLoop,","stopVid","startVidDispTest","startCoderLoop"
+
+附14
+{
+"action":"startAudPlayTest"		//"startAudPlayTest","startVidPlayTest"		
+"paramlist":{
+"outNum":2,
+"outId":[2,1]				
+}
+}
+{
+"action":"stopAud"							//"stopVid"
+}
+{
+"action":"startAudLoop"		//"startAudLoop","startVidLoop","startCoderLoop"
+"paramlist":{
+"inNum":2,
+"inId":[2,3],
+"outNum":2,
+"outId":[0,1]
+}
+}
+功能 媒体状态
+URL path /dev/media/state
+Method GET/REPORT
+Body 见“附15”
+备注  音频状态："idle"空闲  "record"录制  "play"播放
+  视频状态："idle"空闲  "play"播放
+GET section:""
+PUT/REPORT :红色字体
+附15
+{  	
+"audStatus":"record"			//"idle"空闲  "record"录制  "play"播放			
+"vidStatus":"idle"				//"idle"空闲  "play"播放
+}
